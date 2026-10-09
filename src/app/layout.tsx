@@ -13,7 +13,6 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://badspiral.takadev.jp/"),
   title: "悪循環画像ジェネレータ",
   description: "悪循環画像を簡単に生成します",
   icons: {
@@ -24,7 +23,6 @@ export const metadata: Metadata = {
     description: "悪循環画像を簡単に生成します",
     url: "https://badspiral.takadev.jp/",
     siteName: "badspiral.takadev.jp",
-    images: [{ url: "/ogp.png", width: 1200, height: 630 }],
     type: "website",
   },
 };
@@ -32,7 +30,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
+      lang="ja"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
