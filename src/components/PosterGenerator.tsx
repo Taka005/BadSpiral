@@ -23,7 +23,7 @@ export default function PosterGenerator() {
   }, []);
 
   useEffect(() => {
-    if (!imageLoaded || !posterImgRef.current) return;
+    if (!imageLoaded||!posterImgRef.current) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -39,15 +39,15 @@ export default function PosterGenerator() {
 
   const drawMessage = (
     ctx: CanvasRenderingContext2D,
-    bx: number,
-    by: number,
+    posX: number,
+    posY: number,
     fontSize: number,
     fontColor: string,
     str: string,
-    absPos: boolean
+    isCenter: boolean
   ) => {
     const msgs: string[] = [];
-    let mstr = str + '<br>';
+    let mstr = str + "<br>";
     const regex = /(.*?)<br>(.*$)/;
     let match;
     while ((match = mstr.match(regex))) {
@@ -66,13 +66,13 @@ export default function PosterGenerator() {
       msgsWidth.push(metrics.width);
     }
 
-    const baseY = by - maxHeight / 2;
+    const baseY = posY - maxHeight / 2;
     let y = baseY;
 
     for (let i = 0; i < msgs.length; i++) {
-      let x = bx;
-      if (absPos) {
-        x = bx - msgsWidth[i] / 2;
+      let x = posX;
+      if (isCenter) {
+        x = posX - msgsWidth[i] / 2;
       }
       ctx.fillText(msgs[i], x, y);
       y += FONT_HEIGHT;
@@ -102,13 +102,13 @@ export default function PosterGenerator() {
         {INITIAL_TEXT_ELEMENTS.map((el, i) => (
           <div key={i} className="flex flex-col">
             <label className="text-xs text-gray-600 mb-1">
-              項目 {i + 1} {i >= 10 ? '(説明文)' : ''}
+              項目 {i + 1}
             </label>
             <input
               type="text"
               value={texts[i]}
               onChange={(e) => handleInputChange(i, e.target.value)}
-              placeholder={el.defaultMsg.replace(/<br>/g, ' ')}
+              placeholder={el.defaultMsg.replace(/<br>/g, " ")}
               className="border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
@@ -116,7 +116,7 @@ export default function PosterGenerator() {
       </div>
 
       <div className="flex flex-col items-center space-y-4 pt-4">
-        <div className="border shadow-md bg-white p-2">
+        <div className="shadow-md bg-white p-2">
           <canvas
             ref={canvasRef}
             width={515}
